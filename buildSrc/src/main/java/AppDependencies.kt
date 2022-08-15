@@ -19,6 +19,8 @@ object AppDependencies {
         "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     private const val navigationUI =
         "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+
+    private const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
     private const val swipeRefreshLayout =
         "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefresh}"
 
@@ -40,6 +42,7 @@ object AppDependencies {
     private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     private const val room = "androidx.room:room-runtime:${Versions.room}"
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
+    private const val roomPaging = "androidx.room:room-paging:${Versions.room}"
     private const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     private const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
@@ -53,6 +56,7 @@ object AppDependencies {
     private const val mockito = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito}"
     private const val okhttpMockWebServer =
         "com.squareup.okhttp3:mockwebserver:${Versions.okhttpMockWebServer}"
+    private const val pagingTesting = "androidx.paging:paging-common:${Versions.paging}"
     private const val roomKapt = "androidx.room:room-compiler:${Versions.room}"
     private const val truth = "com.google.truth:truth:${Versions.truth}"
     private const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
@@ -68,6 +72,7 @@ object AppDependencies {
         material,
         navigationFragment,
         navigationUI,
+        paging,
         swipeRefreshLayout,
         viewModel
     )
@@ -103,9 +108,11 @@ object AppDependencies {
         gsonConverter,
         okhttp,
         okhttpLogging,
+        paging,
         retrofit,
         room,
-        roomKtx
+        roomKtx,
+        roomPaging
     )
 
     val testAppLibraries = listOf(
@@ -113,6 +120,7 @@ object AppDependencies {
         coroutinesTest,
         junit,
         mockito,
+        pagingTesting,
         truth,
         turbine
     )
@@ -123,6 +131,7 @@ object AppDependencies {
         junit,
         mockito,
         okhttpMockWebServer,
+        pagingTesting,
         truth,
         turbine
     )

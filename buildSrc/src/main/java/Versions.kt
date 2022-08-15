@@ -15,12 +15,13 @@ object Versions {
     const val gson = "2.8.6"
     const val lifecycle = "2.4.1"
     const val material = "1.6.1"
+    const val navigation = "2.4.2"
     const val okhttp = "4.9.3"
+    const val paging = "3.1.1"
     const val room = "2.4.2"
     const val retrofit = "2.9.0"
     const val swipeRefresh = "1.1.0"
     const val timber = "4.7.1"
-    const val navigation = "2.4.2"
 
     // Test
     const val coreTesting = "2.1.0"

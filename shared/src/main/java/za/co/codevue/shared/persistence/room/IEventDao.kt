@@ -1,5 +1,6 @@
 package za.co.codevue.shared.persistence.room
 
+import androidx.annotation.VisibleForTesting
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -18,6 +19,10 @@ internal interface IEventDao {
     @Query(value = "SELECT * FROM events")
     fun getEvents(): PagingSource<Int, EventEntity>
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Query(value = "SELECT * FROM events")
+    suspend fun getEventsTest(): List<EventEntity>
+
     @Query(value = "DELETE FROM events")
-    suspend fun deleteAllEvents()
+    suspend fun deleteEvents()
 }

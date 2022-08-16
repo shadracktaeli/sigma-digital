@@ -11,7 +11,7 @@ import za.co.codevue.shared.domain.datasource.IRemoteDataSource
 import za.co.codevue.shared.domain.repository.IEventRepository
 import za.co.codevue.shared.models.domain.Event
 import za.co.codevue.shared.models.mappers.toEvent
-import za.co.codevue.shared.paging.EventsRemoteMediator
+import za.co.codevue.shared.paging.EventRemoteMediator
 import za.co.codevue.shared.paging.PagingConstants
 
 internal class EventRepositoryImpl(
@@ -31,7 +31,7 @@ internal class EventRepositoryImpl(
                 enablePlaceholders = false,
                 prefetchDistance = PagingConstants.PRE_FETCH_DISTANCE
             ),
-            remoteMediator = EventsRemoteMediator(
+            remoteMediator = EventRemoteMediator(
                 localDataSource = localDataSource,
                 remoteDataSource = remoteDataSource
             ),

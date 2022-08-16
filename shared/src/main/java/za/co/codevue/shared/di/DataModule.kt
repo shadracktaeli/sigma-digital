@@ -8,10 +8,12 @@ import za.co.codevue.shared.data.datasource.LocalEventDataSourceImpl
 import za.co.codevue.shared.data.datasource.LocalScheduleDataSourceImpl
 import za.co.codevue.shared.data.datasource.RemoteDataSourceImpl
 import za.co.codevue.shared.data.repository.EventRepositoryImpl
+import za.co.codevue.shared.data.repository.ScheduleRepositoryImpl
 import za.co.codevue.shared.domain.datasource.ILocalEventDataSource
 import za.co.codevue.shared.domain.datasource.ILocalScheduleDataSource
 import za.co.codevue.shared.domain.datasource.IRemoteDataSource
 import za.co.codevue.shared.domain.repository.IEventRepository
+import za.co.codevue.shared.domain.repository.IScheduleRepository
 import za.co.codevue.shared.network.retrofit.service.IEventApiService
 import za.co.codevue.shared.persistence.room.IEventDao
 import za.co.codevue.shared.persistence.room.IScheduleDao
@@ -45,5 +47,14 @@ internal object DataModule {
         remoteDataSource: IRemoteDataSource
     ): IEventRepository {
         return EventRepositoryImpl(localDataSource, remoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideScheduleRepository(
+        localDataSource: ILocalScheduleDataSource,
+        remoteDataSource: IRemoteDataSource
+    ): IScheduleRepository {
+        return ScheduleRepositoryImpl(localDataSource, remoteDataSource)
     }
 }

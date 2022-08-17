@@ -2,13 +2,13 @@ package za.co.codevue.shared.persistence.room
 
 import androidx.test.filters.SmallTest
 import kotlinx.coroutines.runBlocking
+import mocks.DEFAULT_EVENT_ENTITY
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import za.co.codevue.shared.models.entities.EventEntity
 
 @RunWith(JUnit4::class)
 @SmallTest
@@ -25,7 +25,7 @@ internal class EventDaoTest : DataBaseTest() {
     @Throws(Exception::class)
     fun writeAndReadEvents() = runBlocking {
         // given
-        val mockEvents = listOf(TEST_EVENT)
+        val mockEvents = listOf(DEFAULT_EVENT_ENTITY)
         // when
         eventDao.saveEvents(mockEvents)
         val events = eventDao.getEventsTest()
@@ -38,7 +38,7 @@ internal class EventDaoTest : DataBaseTest() {
     fun writeAndDeleteEvents() = runBlocking {
         with(eventDao) {
             // when
-            saveEvents(listOf(TEST_EVENT))
+            saveEvents(listOf(DEFAULT_EVENT_ENTITY))
             deleteEvents()
             val events = getEventsTest()
             // then
@@ -47,14 +47,15 @@ internal class EventDaoTest : DataBaseTest() {
 
     }
 
-    internal companion object {
-        private val TEST_EVENT = EventEntity(
-            id = "id",
-            date = "2022-08-15T01:14:10.071Z",
-            imageUrl = "image.com",
-            subtitle = "Rick and Morty Space League",
-            title = "Rick vs Morty",
-            videoUrl = "video.com"
-        )
+    @Test
+    @Throws(Exception::class)
+    fun writeAndReadEventById() = runBlocking {
+        with(eventDao) {
+            // when
+            saveEvents(listOf(DEFAULT_EVENT_ENTITY))
+            val event = getEvent(DEFAULT_EVENT_ENTITY.id)
+            // then
+            assertEquals(DEFAULT_EVENT_ENTITY, event)
+        }
     }
 }

@@ -4,13 +4,13 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import za.co.codevue.shared.domain.datasource.ILocalScheduleDataSource
-import za.co.codevue.shared.domain.datasource.IRemoteDataSource
+import za.co.codevue.shared.domain.datasource.IRemoteScheduleDataSource
 import za.co.codevue.shared.models.entities.ScheduleEntity
 import za.co.codevue.shared.models.mappers.toScheduleEntity
 
 internal class ScheduleRemoteMediator(
     private val localDataSource: ILocalScheduleDataSource,
-    private val remoteDataSource: IRemoteDataSource
+    private val remoteDataSource: IRemoteScheduleDataSource
 ) : RemoteMediator<Int, ScheduleEntity>() {
     override suspend fun load(
         loadType: LoadType,

@@ -22,6 +22,7 @@ internal abstract class DataBaseTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
+        db.clearAllTables()
         db.close()
     }
 }

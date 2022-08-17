@@ -47,6 +47,11 @@ android {
     sourceSets {
         val main by getting
         main.res.srcDir(listOf("src/main/res", file("src/main/layouts").listFiles()))
+
+        val test by getting
+        test.java.srcDir("src/testShared")
+        val androidTest by getting
+        androidTest.java.srcDir("src/testShared")
     }
 
     packagingOptions {

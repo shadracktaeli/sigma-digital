@@ -2,7 +2,7 @@
 object Versions {
     // App level
     const val gradle = "7.0.4"
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.6.10"
 
     // Libs
     const val appcompat = "1.4.2"

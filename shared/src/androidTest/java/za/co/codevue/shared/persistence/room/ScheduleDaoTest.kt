@@ -2,13 +2,13 @@ package za.co.codevue.shared.persistence.room
 
 import androidx.test.filters.SmallTest
 import kotlinx.coroutines.runBlocking
+import mocks.DEFAULT_SCHEDULE_ENTITY
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import za.co.codevue.shared.models.entities.ScheduleEntity
 
 @RunWith(JUnit4::class)
 @SmallTest
@@ -23,9 +23,9 @@ internal class ScheduleDaoTest : DataBaseTest() {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndReadEvents() = runBlocking {
+    fun writeAndReadSchedules() = runBlocking {
         // given
-        val mockSchedules = listOf(TEST_SCHEDULE)
+        val mockSchedules = listOf(DEFAULT_SCHEDULE_ENTITY)
         // when
         scheduleDao.saveSchedules(mockSchedules)
         val schedules = scheduleDao.getSchedulesTest()
@@ -35,25 +35,14 @@ internal class ScheduleDaoTest : DataBaseTest() {
 
     @Test
     @Throws(Exception::class)
-    fun writeAndDeleteEvents() = runBlocking {
+    fun writeAndDeleteSchedules() = runBlocking {
         with(scheduleDao) {
             // when
-            saveSchedules(listOf(TEST_SCHEDULE))
+            saveSchedules(listOf(DEFAULT_SCHEDULE_ENTITY))
             deleteSchedules()
             val schedules = getSchedulesTest()
             // then
             assertTrue(schedules.isEmpty())
         }
-
-    }
-
-    internal companion object {
-        private val TEST_SCHEDULE = ScheduleEntity(
-            id = "id",
-            date = "2022-08-15T01:14:10.071Z",
-            imageUrl = "image.com",
-            subtitle = "Rick and Morty Space League",
-            title = "Rick vs Morty"
-        )
     }
 }

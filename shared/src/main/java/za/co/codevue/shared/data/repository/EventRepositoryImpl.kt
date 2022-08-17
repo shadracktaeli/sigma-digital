@@ -7,7 +7,7 @@ import androidx.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import za.co.codevue.shared.domain.datasource.ILocalEventDataSource
-import za.co.codevue.shared.domain.datasource.IRemoteDataSource
+import za.co.codevue.shared.domain.datasource.IRemoteEventDataSource
 import za.co.codevue.shared.domain.repository.IEventRepository
 import za.co.codevue.shared.models.domain.Event
 import za.co.codevue.shared.models.mappers.toEvent
@@ -16,8 +16,8 @@ import za.co.codevue.shared.paging.PagingConstants
 
 internal class EventRepositoryImpl(
     private val localDataSource: ILocalEventDataSource,
-    private val remoteDataSource: IRemoteDataSource
-): IEventRepository {
+    private val remoteDataSource: IRemoteEventDataSource
+) : IEventRepository {
     override suspend fun getEvent(eventId: String): Event {
         return localDataSource.getEvent(eventId).run {
             this.toEvent()
@@ -36,6 +36,6 @@ internal class EventRepositoryImpl(
                 remoteDataSource = remoteDataSource
             ),
             pagingSourceFactory = { localDataSource.getEvents() }
-        ).flow.map { pagingData ->  pagingData.map { it.toEvent() } }
+        ).flow.map { pagingData -> pagingData.map { it.toEvent() } }
     }
 }

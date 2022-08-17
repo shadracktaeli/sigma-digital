@@ -38,6 +38,13 @@ android {
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
 
+    sourceSets {
+        val test by getting
+        test.java.srcDir("src/testShared")
+        val androidTest by getting
+        androidTest.java.srcDir("src/testShared")
+    }
+
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

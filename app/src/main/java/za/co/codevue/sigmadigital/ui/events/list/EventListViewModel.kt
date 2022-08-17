@@ -1,4 +1,4 @@
-package za.co.codevue.sigmadigital.ui.eventlist
+package za.co.codevue.sigmadigital.ui.events.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

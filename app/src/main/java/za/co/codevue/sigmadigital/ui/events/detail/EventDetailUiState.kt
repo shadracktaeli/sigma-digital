@@ -1,4 +1,4 @@
-package za.co.codevue.sigmadigital.ui.eventdetail
+package za.co.codevue.sigmadigital.ui.events.detail
 
 import za.co.codevue.shared.models.domain.Event
 

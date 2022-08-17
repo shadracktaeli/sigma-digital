@@ -1,4 +1,4 @@
-package za.co.codevue.sigmadigital.ui.events
+package za.co.codevue.sigmadigital.ui.eventlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,7 @@ import za.co.codevue.shared.domain.usecase.events.GetEventsUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class EventsViewModel @Inject constructor(
+class EventListViewModel @Inject constructor(
     private val getEventsUseCase: GetEventsUseCase
 ) : ViewModel() {
     fun getEvents() = getEventsUseCase(Unit).cachedIn(viewModelScope)

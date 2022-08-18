@@ -9,12 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import za.co.codevue.sigmadigital.databinding.FragmentScheduleBinding
-import za.co.codevue.sigmadigital.ui.schedule.adapter.SchedulePagingAdapter
+import za.co.codevue.sigmadigital.ui.common.PagingListAdapter
+import za.co.codevue.sigmadigital.ui.common.PagingStateAdapter
 
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
@@ -24,7 +25,7 @@ class ScheduleFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: ScheduleViewModel by viewModels()
-    private val pagingAdapter = SchedulePagingAdapter()
+    private lateinit var pagingAdapter: PagingListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,12 +45,25 @@ class ScheduleFragment : Fragment() {
 
     private fun initViewBinding() {
         binding.apply {
+            pagingAdapter = PagingListAdapter().apply {
+                withLoadStateHeaderAndFooter(
+                    header = PagingStateAdapter(adapter = this),
+                    footer = PagingStateAdapter(adapter = this)
+                )
+            }
+
             swipeRefreshLayout.setOnRefreshListener {
-                // TODO
+                pagingAdapter.refresh()
             }
 
             scheduleRecyclerView.apply {
                 adapter = this@ScheduleFragment.pagingAdapter
+            }
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                pagingAdapter.loadStateFlow.collectLatest {
+                    swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+                }
             }
         }
     }
@@ -58,7 +72,7 @@ class ScheduleFragment : Fragment() {
         // observe events
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getSchedule().distinctUntilChanged().collectLatest {
+                viewModel.getSchedule().collectLatest {
                     pagingAdapter.submitData(it)
                 }
             }

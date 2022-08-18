@@ -3,4 +3,8 @@
 
     <string name="menu_events">Events</string>
     <string name="menu_schedule">Schedule</string>
+
+    <string name="button_retry">Retry</string>
+
+    <string name="content_description_thumbnail">List item thumbnail</string>
 </resources>

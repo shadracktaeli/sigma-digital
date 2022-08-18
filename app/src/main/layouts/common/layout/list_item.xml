@@ -33,7 +33,6 @@
             android:layout_height="match_parent"
             android:padding="16dp">
 
-
             <TextView
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="match_parent"
@@ -44,6 +43,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{title}"
                 tools:text="UEFA" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

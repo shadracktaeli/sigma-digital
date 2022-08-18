@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import za.co.codevue.shared.models.domain.Event
 import za.co.codevue.sigmadigital.databinding.ListItemBinding
 
-class EventPagingAdapter :
+class EventPagingAdapter(private val onEventClick: (String) -> Unit) :
     PagingDataAdapter<Event, EventPagingAdapter.EventViewHolder>(DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         getItem(position)?.also {
@@ -18,13 +18,27 @@ class EventPagingAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
-            ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onEventClick = onEventClick
         )
     }
 
-    inner class EventViewHolder(private val binding: ListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class EventViewHolder(
+        private val binding: ListItemBinding,
+        private val onEventClick: (String) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+        private var eventId: String? = null
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    eventId?.also { onEventClick(it) }
+                }
+            }
+        }
+
         fun bind(event: Event) {
+            eventId = event.id
             binding.apply {
                 imageUrl = event.imageUrl
                 title = event.title

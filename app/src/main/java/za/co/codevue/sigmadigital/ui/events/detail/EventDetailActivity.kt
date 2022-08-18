@@ -20,6 +20,8 @@ class EventDetailActivity : AppCompatActivity() {
         ActivityEventDetailBinding.inflate(layoutInflater)
     }
     private val viewModel: EventDetailViewModel by viewModels()
+
+    private var eventId: String? = null
     private var player: ExoPlayer? = null
 
     override fun onStart() {
@@ -30,7 +32,14 @@ class EventDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        // get eventId
+        intent.extras?.also {
+            eventId = EventDetailActivityArgs.fromBundle(it).eventId
+        } ?: kotlin.run {
+            // exit if eventId is not set
+            // TODO show error?
+            finish()
+        }
         initViewModel()
     }
 
@@ -55,8 +64,7 @@ class EventDetailActivity : AppCompatActivity() {
                 }
             }
         }
-        // TODO use ID from nav args
-        getEvent(eventId = "1")
+        eventId?.also { getEvent(eventId = it) }
     }
 
     private fun initializePlayer() {

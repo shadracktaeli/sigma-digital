@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -24,7 +25,7 @@ class EventListFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: EventListViewModel by viewModels()
-    private val pagingAdapter = EventPagingAdapter()
+    private lateinit var pagingAdapter: EventPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +47,12 @@ class EventListFragment : Fragment() {
         binding.apply {
             swipeRefreshLayout.setOnRefreshListener {
                 // TODO
+            }
+
+            pagingAdapter = EventPagingAdapter { eventId ->
+                findNavController().navigate(
+                    EventListFragmentDirections.startEventDetailActivity(eventId)
+                )
             }
 
             eventsRecyclerView.apply {

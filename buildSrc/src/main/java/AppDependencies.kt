@@ -1,4 +1,5 @@
-@file:Suppress("SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection",
+@file:Suppress(
+    "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection",
     "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection",
     "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection",
     "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection"
@@ -12,8 +13,6 @@ object AppDependencies {
     private const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     private const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
-    private const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    private const val glideKapt = "com.github.bumptech.glide:compiler:${Versions.glide}"
     private const val material = "com.google.android.material:material:${Versions.material}"
     private const val navigationFragment =
         "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
@@ -33,10 +32,16 @@ object AppDependencies {
     private const val daggerHilt = "com.google.dagger:hilt-android:${Versions.daggerHilt}"
     private const val daggerHiltCompilerKapt =
         "com.google.dagger:hilt-compiler:${Versions.daggerHilt}"
+    private const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    private const val glideKapt = "com.github.bumptech.glide:compiler:${Versions.glide}"
     private const val gson = "com.google.code.gson:gson:${Versions.gson}"
     private const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     private const val lifecycleRuntime =
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+    private const val media3ExoPlayer =
+        "androidx.media3:media3-exoplayer:${Versions.media3}"
+    private const val media3Ui =
+        "androidx.media3:media3-ui:${Versions.media3}"
     private const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     private const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
@@ -70,6 +75,8 @@ object AppDependencies {
         glide,
         lifecycleRuntime,
         material,
+        media3ExoPlayer,
+        media3Ui,
         navigationFragment,
         navigationUI,
         paging,

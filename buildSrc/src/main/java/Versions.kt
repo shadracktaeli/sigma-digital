@@ -10,6 +10,7 @@ object Versions {
     const val coreKtx = "1.7.0"
     const val coroutines = "1.5.0"
     const val daggerHilt = "2.41"
+    const val media3 = "1.0.0-beta02"
     const val fragment = "1.3.6"
     const val glide = "4.13.0"
     const val gson = "2.8.6"

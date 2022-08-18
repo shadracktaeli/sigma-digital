@@ -16,16 +16,15 @@ class EventDetailViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<EventDetailUiState>(EventDetailUiState.Idle)
     val uiState = _uiState.asStateFlow()
-    var eventId: String? = null
 
-    fun getEvent() {
-        eventId?.also {
-            viewModelScope.launch {
-                _uiState.value = when (val result = getEventByIdUseCase(it)) {
-                    is StatefulData.Success -> EventDetailUiState.Success(result.data)
-                    is StatefulData.Error -> EventDetailUiState.Error(result.message)
-                    else -> EventDetailUiState.Idle
-                }
+    var playerState: PlayerState? = null
+
+    fun getEvent(eventId: String) {
+        viewModelScope.launch {
+            _uiState.value = when (val result = getEventByIdUseCase(eventId)) {
+                is StatefulData.Success -> EventDetailUiState.Success(result.data)
+                is StatefulData.Error -> EventDetailUiState.Error(result.message)
+                else -> EventDetailUiState.Idle
             }
         }
     }

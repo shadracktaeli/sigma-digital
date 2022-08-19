@@ -1,6 +1,7 @@
 package za.co.codevue.sigmadigital.ui.events.detail
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -40,6 +41,10 @@ class EventDetailActivity : AppCompatActivity() {
             // TODO show error?
             finish()
         }
+        // init toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         initViewModel()
     }
 
@@ -121,5 +126,16 @@ class EventDetailActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         releasePlayer()
+    }
+
+    // handle back button press
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/eventListFragment">
+
+    <fragment
+        android:id="@+id/eventListFragment"
+        android:name="za.co.codevue.sigmadigital.ui.events.list.EventListFragment"
+        tools:layout="@layout/fragment_event_list">
+        <action
+            android:id="@+id/start_event_detail_activity"
+            app:destination="@id/eventDetailFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/eventDetailFragment"
+        android:name="za.co.codevue.sigmadigital.ui.events.detail.EventDetailActivity"
+        tools:layout="@layout/activity_event_detail">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </activity>
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="za.co.codevue.sigmadigital.ui.schedule.ScheduleFragment"
+        tools:layout="@layout/fragment_schedule" />
+</navigation>

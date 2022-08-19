@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="subTitle"
+            type="String" />
+
+        <variable
+            name="date"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/large_content_margin">
+
+        <ImageView
+            android:id="@+id/item_thumbnail"
+            android:layout_width="@dimen/thumbnail_width"
+            android:layout_height="@dimen/thumbnail_height"
+            android:contentDescription="@string/content_description_thumbnail"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{imageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/item_title"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_content_margin"
+            android:layout_marginTop="@dimen/medium_content_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/item_subtitle"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_content_margin"
+            android:layout_marginTop="@dimen/medium_content_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{subTitle}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/item_title"
+            tools:text="Subtitle" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/item_date"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_content_margin"
+            android:layout_marginBottom="@dimen/medium_content_margin"
+            android:maxLines="1"
+            android:text="@{date}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_thumbnail"
+            tools:text="Date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

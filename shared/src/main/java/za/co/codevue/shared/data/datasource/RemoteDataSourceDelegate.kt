@@ -1,6 +1,7 @@
 package za.co.codevue.shared.data.datasource
 
-import timber.log.Timber
+import za.co.codevue.shared.extensions.modifyDate
+import za.co.codevue.shared.extensions.valueOrDefault
 import za.co.codevue.shared.models.network.EventDTO
 import za.co.codevue.shared.paging.PagingConstants
 
@@ -9,6 +10,8 @@ internal abstract class RemoteDataSourceDelegate {
         private set
     var lastId: Int = 0
         private set
+    var lastDate: String? = null
+    private set
 
     /**
      * Simulates a paginating Api request
@@ -17,12 +20,10 @@ internal abstract class RemoteDataSourceDelegate {
         refresh: Boolean,
         apiCall: () -> List<EventDTO>
     ): List<EventDTO> {
-        Timber.e("refresh: $refresh")
-        Timber.e("lastItemId: $lastId")
-        Timber.e("currentPage: $currentPage")
         if (refresh) {
             currentPage = 0
             lastId = 0
+            lastDate = null
         }
 
         return if (currentPage < PagingConstants.PAGE_LIMIT) {
@@ -32,26 +33,29 @@ internal abstract class RemoteDataSourceDelegate {
             if (lastId == 0) {
                 // initial load -> save last item's ID
                 lastId = events.last().id?.toInt() ?: 0
+                lastDate = events.last().date
                 events
             } else {
-                events.sanitizeEventIds(lastId).run {
+                events.sanitizeEvents(lastId, lastDate.valueOrDefault()).run {
                     lastId = first
-                    second // return sanitized list
+                    lastDate = second
+                    third // return sanitized list
                 }
             }
         } else emptyList()
     }
 
     /**
-     * Sanitizes event IDs to simulate new events
+     * Sanitizes event IDs and dates to simulate new events
      */
-    private fun MutableList<EventDTO>.sanitizeEventIds(lastEventId: Int): Pair<Int, List<EventDTO>> {
+    private fun MutableList<EventDTO>.sanitizeEvents(lastEventId: Int, lastEventDate: String): Triple<Int, String, List<EventDTO>> {
         var lastId = lastEventId
+        val lastDate = lastEventDate.modifyDate()
         forEachIndexed { index, event ->
             // increment by 1 to simulate ID sequence
             lastId++
             this[index] = event.copy(id = lastId.toString())
         }
-        return Pair(lastId, this)
+        return Triple(lastId, lastDate, this.map { it.copy(date = lastDate) })
     }
 }

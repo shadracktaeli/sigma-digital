@@ -1,5 +1,6 @@
 package za.co.codevue.sigmadigital.ui.common
 
+import za.co.codevue.shared.extensions.toPrettyDate
 import za.co.codevue.shared.models.domain.Event
 import za.co.codevue.shared.models.domain.Schedule
 
@@ -13,7 +14,7 @@ sealed class PagingListModel {
     ) : PagingListModel() {
         constructor(event: Event) : this(
             event.id,
-            event.date,
+            event.date.toPrettyDate(),
             event.imageUrl,
             event.subtitle,
             event.title
@@ -21,7 +22,7 @@ sealed class PagingListModel {
 
         constructor(schedule: Schedule) : this(
             schedule.id,
-            schedule.date,
+            schedule.date.toPrettyDate(),
             schedule.imageUrl,
             schedule.subtitle,
             schedule.title

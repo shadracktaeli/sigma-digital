@@ -19,6 +19,7 @@ object Versions {
     const val navigation = "2.4.2"
     const val okhttp = "4.9.3"
     const val paging = "3.1.1"
+    const val prettyTime = "5.0.3.Final"
     const val room = "2.4.2"
     const val retrofit = "2.9.0"
     const val swipeRefresh = "1.1.0"

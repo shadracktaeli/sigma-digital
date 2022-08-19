@@ -1,5 +1,6 @@
 package za.co.codevue.shared.models.mappers
 
+import za.co.codevue.shared.extensions.toDate
 import za.co.codevue.shared.extensions.valueOrDefault
 import za.co.codevue.shared.models.domain.Event
 import za.co.codevue.shared.models.entities.EventEntity
@@ -25,7 +26,7 @@ internal fun EventDTO.toEventEntity(): EventEntity {
 internal fun EventEntity.toEvent(): Event {
     return Event(
         id = this.id,
-        date = this.date,
+        date = this.date.toDate(),
         imageUrl = this.imageUrl,
         subtitle = this.subtitle,
         title = this.title,

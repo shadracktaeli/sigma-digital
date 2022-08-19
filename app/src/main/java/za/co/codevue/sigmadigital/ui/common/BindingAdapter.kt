@@ -5,7 +5,9 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.paging.LoadState
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.textview.MaterialTextView
+import za.co.codevue.shared.extensions.mapExceptionMessage
 import za.co.codevue.sigmadigital.R
 
 /** Shows or hides a [View] */
@@ -20,6 +22,7 @@ fun ImageView.loadImage(imageUrl: String?) {
     imageUrl?.also {
         Glide.with(this.context)
             .load(it)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .placeholder(R.mipmap.ic_launcher)
             .into(this)
@@ -30,6 +33,6 @@ fun ImageView.loadImage(imageUrl: String?) {
 @BindingAdapter(value = ["errorMessage"])
 fun MaterialTextView.setError(loadState: LoadState?) {
     (loadState as? LoadState.Error)?.also {
-        text = it.error.message
+        text = it.error.mapExceptionMessage()
     }
 }

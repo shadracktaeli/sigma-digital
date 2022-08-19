@@ -1,5 +1,6 @@
 package za.co.codevue.shared.data.datasource
 
+import timber.log.Timber
 import za.co.codevue.shared.models.network.EventDTO
 import za.co.codevue.shared.paging.PagingConstants
 
@@ -16,8 +17,12 @@ internal abstract class RemoteDataSourceDelegate {
         refresh: Boolean,
         apiCall: () -> List<EventDTO>
     ): List<EventDTO> {
+        Timber.e("refresh: $refresh")
+        Timber.e("lastItemId: $lastId")
+        Timber.e("currentPage: $currentPage")
         if (refresh) {
             currentPage = 0
+            lastId = 0
         }
 
         return if (currentPage < PagingConstants.PAGE_LIMIT) {

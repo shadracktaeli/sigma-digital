@@ -28,8 +28,9 @@ internal class EventRepositoryImpl(
         return Pager(
             PagingConfig(
                 pageSize = PagingConstants.PAGE_SIZE,
+                prefetchDistance = PagingConstants.PAGE_SIZE,
                 enablePlaceholders = false,
-                prefetchDistance = PagingConstants.PRE_FETCH_DISTANCE
+                initialLoadSize = PagingConstants.PAGE_SIZE * 2
             ),
             remoteMediator = EventRemoteMediator(
                 localDataSource = localDataSource,

@@ -9,7 +9,7 @@ import java.net.UnknownHostException
 /**
  * Exception mapper
  */
-internal fun Throwable.mapExceptionMessage(): String {
+fun Throwable.mapExceptionMessage(): String {
     logException(this.javaClass.name, message, this)
     val defaultErrorMessage = "An unexpected error has occurred, please try again."
     return when (this) {

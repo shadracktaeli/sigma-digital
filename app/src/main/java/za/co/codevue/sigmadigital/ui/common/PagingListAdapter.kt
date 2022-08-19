@@ -95,6 +95,11 @@ class PagingListAdapter(
                 oldItem: PagingListModel,
                 newItem: PagingListModel
             ): Boolean = oldItem == newItem
+
+            override fun getChangePayload(
+                oldItem: PagingListModel,
+                newItem: PagingListModel
+            ): Any = Any()
         }
     }
 }

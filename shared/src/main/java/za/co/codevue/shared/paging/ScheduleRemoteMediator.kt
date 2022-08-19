@@ -25,14 +25,13 @@ internal class ScheduleRemoteMediator(
             }
             // fetch events from api
             val schedules = remoteDataSource.fetchSchedules(refresh = loadType == LoadType.REFRESH)
-            if (schedules.isNotEmpty()) {
-                // clear schedules if we're refreshing
-                if (loadType == LoadType.REFRESH) {
-                    localDataSource.deleteSchedules()
-                }
-                // save new schedules to the cache
-                localDataSource.saveSchedules(schedules.map { it.toScheduleEntity() })
+
+            // clear schedules if we're refreshing
+            if (loadType == LoadType.REFRESH) {
+                localDataSource.deleteSchedules()
             }
+            // save new schedules to the cache
+            localDataSource.saveSchedules(schedules.map { it.toScheduleEntity() })
 
             MediatorResult.Success(
                 endOfPaginationReached = schedules.isEmpty() // report end of pagination if empty

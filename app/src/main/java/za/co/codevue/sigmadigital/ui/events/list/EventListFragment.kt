@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import za.co.codevue.sigmadigital.databinding.FragmentEventListBinding
 import za.co.codevue.sigmadigital.ui.common.PagingListAdapter
 import za.co.codevue.sigmadigital.ui.common.PagingStateAdapter
@@ -28,7 +26,6 @@ class EventListFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: EventListViewModel by viewModels()
     private lateinit var pagingAdapter: PagingListAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,10 +49,8 @@ class EventListFragment : Fragment() {
                     EventListFragmentDirections.startEventDetailActivity(eventId)
                 )
             }.apply {
-                withLoadStateHeaderAndFooter(
-                    header = PagingStateAdapter(adapter = this),
-                    footer = PagingStateAdapter(adapter = this)
-                )
+                stateRestorationPolicy =
+                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
 
             swipeRefreshLayout.setOnRefreshListener {
@@ -63,12 +58,18 @@ class EventListFragment : Fragment() {
             }
 
             eventsRecyclerView.apply {
-                adapter = this@EventListFragment.pagingAdapter
+                adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+                    header = PagingStateAdapter {
+                        pagingAdapter.retry()
+                    },
+                    footer = PagingStateAdapter {
+                        pagingAdapter.retry()
+                    }
+                )
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
                 pagingAdapter.loadStateFlow.collectLatest {
-                    Timber.e("loadState: ${it.refresh}")
                     swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
                 }
             }
@@ -78,10 +79,8 @@ class EventListFragment : Fragment() {
     private fun initViewModel() {
         // observe events
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getEvents().collectLatest {
-                    pagingAdapter.submitData(it)
-                }
+            viewModel.getEvents().collectLatest {
+                pagingAdapter.submitData(it)
             }
         }
     }

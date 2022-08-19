@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -46,18 +45,24 @@ class ScheduleFragment : Fragment() {
     private fun initViewBinding() {
         binding.apply {
             pagingAdapter = PagingListAdapter().apply {
-                withLoadStateHeaderAndFooter(
-                    header = PagingStateAdapter(adapter = this),
-                    footer = PagingStateAdapter(adapter = this)
-                )
+                stateRestorationPolicy =
+                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
+
 
             swipeRefreshLayout.setOnRefreshListener {
                 pagingAdapter.refresh()
             }
 
             scheduleRecyclerView.apply {
-                adapter = this@ScheduleFragment.pagingAdapter
+                adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+                    header = PagingStateAdapter {
+                        pagingAdapter.retry()
+                    },
+                    footer = PagingStateAdapter {
+                        pagingAdapter.retry()
+                    }
+                )
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
@@ -71,10 +76,8 @@ class ScheduleFragment : Fragment() {
     private fun initViewModel() {
         // observe events
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getSchedule().collectLatest {
-                    pagingAdapter.submitData(it)
-                }
+            viewModel.getSchedule().collectLatest {
+                pagingAdapter.submitData(it)
             }
         }
     }

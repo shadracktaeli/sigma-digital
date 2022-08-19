@@ -25,14 +25,13 @@ internal class EventRemoteMediator(
             }
             // fetch events from api
             val events = remoteDataSource.fetchEvents(refresh = loadType == LoadType.REFRESH)
-            if (events.isNotEmpty()) {
-                // clear events if we're refreshing
-                if (loadType == LoadType.REFRESH) {
-                    localDataSource.deleteEvents()
-                }
-                // save new events to the cache
-                localDataSource.saveEvents(events.map { it.toEventEntity() })
+
+            // clear events if we're refreshing
+            if (loadType == LoadType.REFRESH) {
+                localDataSource.deleteEvents()
             }
+            // save new events to the cache
+            localDataSource.saveEvents(events.map { it.toEventEntity() })
 
             MediatorResult.Success(
                 endOfPaginationReached = events.isEmpty() // report end of pagination if empty

@@ -8,8 +8,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import za.co.codevue.sigmadigital.databinding.PagingStateItemBinding
 
-class PagingStateAdapter<T : Any, VH : RecyclerView.ViewHolder>(
-    private val adapter: PagingDataAdapter<T, VH>
+class PagingStateAdapter(
+    private val retry: () -> Unit
 ) : LoadStateAdapter<PagingStateAdapter.PagingStateItemViewHolder>() {
 
     override fun onBindViewHolder(
@@ -27,7 +27,7 @@ class PagingStateAdapter<T : Any, VH : RecyclerView.ViewHolder>(
                 parent,
                 false
             )
-        ) { adapter.retry() }
+        ) { retry() }
     }
 
     class PagingStateItemViewHolder(

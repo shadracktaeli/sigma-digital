@@ -4,6 +4,8 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
 /**
  * Returns the value of [String] if not null or a blank [String]
  */
@@ -14,7 +16,7 @@ fun String?.valueOrDefault() = this ?: ""
  */
 fun String.toDate(): Date {
     val dateFormat = SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+        DATE_FORMAT,
         Locale.getDefault()
     )
     dateFormat.timeZone = TimeZone.getTimeZone("GMT")
@@ -30,3 +32,23 @@ fun String.toDate(): Date {
  * Formats a [Date] to pretty time format i.e `10 minutes ago`
  */
 fun Date.toPrettyDate(): String = PrettyTime().format(this)
+
+/**
+ * Adds an hour to a datetime [String]
+ */
+internal fun String.modifyDate(): String {
+    val dateFormat = SimpleDateFormat(
+        DATE_FORMAT,
+        Locale.getDefault()
+    )
+
+    return try {
+        val date = Calendar.getInstance().apply {
+            time = this@modifyDate.toDate()
+            add(Calendar.HOUR, 1)
+        }.time
+        dateFormat.format(date)
+    } catch (e: Exception) {
+        this
+    }
+}

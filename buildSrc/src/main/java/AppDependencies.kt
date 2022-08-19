@@ -44,6 +44,7 @@ object AppDependencies {
         "androidx.media3:media3-ui:${Versions.media3}"
     private const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     private const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
+    private const val prettyTime = "org.ocpsoft.prettytime:prettytime:${Versions.prettyTime}"
     private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     private const val room = "androidx.room:room-runtime:${Versions.room}"
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
@@ -116,6 +117,7 @@ object AppDependencies {
         okhttp,
         okhttpLogging,
         paging,
+        prettyTime,
         retrofit,
         room,
         roomKtx,

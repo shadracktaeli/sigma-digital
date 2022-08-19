@@ -16,7 +16,7 @@ internal interface IEventDao {
     @Query(value = "SELECT * FROM events WHERE id = :eventId")
     suspend fun getEvent(eventId: String): EventEntity
 
-    @Query(value = "SELECT * FROM events")
+    @Query(value = "SELECT * FROM events ORDER BY datetime(date) ASC")
     fun getEvents(): PagingSource<Int, EventEntity>
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

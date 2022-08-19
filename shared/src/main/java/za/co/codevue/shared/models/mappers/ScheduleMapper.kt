@@ -1,5 +1,6 @@
 package za.co.codevue.shared.models.mappers
 
+import za.co.codevue.shared.extensions.toDate
 import za.co.codevue.shared.extensions.valueOrDefault
 import za.co.codevue.shared.models.domain.Schedule
 import za.co.codevue.shared.models.entities.ScheduleEntity
@@ -24,7 +25,7 @@ internal fun EventDTO.toScheduleEntity(): ScheduleEntity {
 internal fun ScheduleEntity.toSchedule(): Schedule {
     return Schedule(
         id = this.id,
-        date = this.date,
+        date = this.date.toDate(),
         imageUrl = this.imageUrl,
         subtitle = this.subtitle,
         title = this.title
